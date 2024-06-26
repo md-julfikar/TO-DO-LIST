@@ -1,0 +1,21 @@
+{% extends 'todo/base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}To-Do List{% endblock %}
+{% block content %}
+<h1 class="mb-4">To-Do List</h1>
+<ul class="list-group">
+    {% for task in tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <input type="checkbox" class="mr-3" {% if task.completed %}checked{% endif %} onclick="toggleTask({{ task.id }})">
+                <span{% if task.completed %} class="completed"{% endif %}>{{ task.title }}</span>
+            </div>
+            <div>
+                <a href="{% url 'task_update' task.id %}" class="btn btn-sm btn-warning mr-2">Edit</a>
+                <a href="{% url 'task_delete' task.id %}" class="btn btn-sm btn-danger">Delete</a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'task_create' %}" class="btn btn-primary mt-4">Create New Task</a>
+{% endblock %}
